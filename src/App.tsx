@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import CalendarTable from './CalendarTable';
 
-function App() {
-  const [count, setCount] = useState(0)
+const MarkdownCalendar: React.FC = () => {
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const [lang, setLang] = useState<string>('ja');
+
+  const handleMonthChange = (change: number) => {
+    const newMonth = month + change;
+    if (newMonth < 1) {
+      setYear(year - 1);
+      setMonth(12);
+    } else if (newMonth > 12) {
+      setYear(year + 1);
+      setMonth(1);
+    } else {
+      setMonth(newMonth);
+    }
+  };
 
   return (
-    <>
+    <div>
+      <h1>Markdown Calendar Generator</h1>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <button onClick={() => setLang('ja')}>日本語</button>
+        <button onClick={() => setLang('en')}>English</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div>
+        <button onClick={() => handleMonthChange(-1)}>{lang === 'ja' ? '前月' : 'Previous Month'}</button>
+        <button onClick={() => handleMonthChange(1)}>{lang === 'ja' ? '翌月' : 'Next Month'}</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <CalendarTable
+        year={year}
+        month={month}
+        lang={lang}
+      />
+    </div>
+  );
+};
 
-export default App
+export default MarkdownCalendar;
