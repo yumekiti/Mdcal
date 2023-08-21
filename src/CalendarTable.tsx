@@ -15,6 +15,10 @@ const CalendarTable: React.FC<CalendarTableProps> = ({
   const colnames_ja = ['月', '火', '水', '木', '金', '土', '日'];
   const colnames_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
   const createMarkdownCalendar = () => {
     const cal = new Calendar(1);
     const monthStr = lang === 'ja' ? `${year}年${month}月` : `${month}/${year}`;
@@ -41,7 +45,7 @@ const CalendarTable: React.FC<CalendarTableProps> = ({
   return (
     <div>
       <pre>{createMarkdownCalendar()}</pre>
-      <button onClick={() => navigator.clipboard.writeText(createMarkdownCalendar())}>Copy to clipboard</button>
+      <button onClick={() => copyToClipboard(createMarkdownCalendar())}>Copy</button>
     </div>
   )
 };
