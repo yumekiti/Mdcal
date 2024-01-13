@@ -26,7 +26,7 @@ const CalendarTable: React.FC<CalendarTableProps> = ({
 
     const tableHeader = weekCol.map((col) => `| ${col} `).join('');
     const tableDivider = weekCol.map(() => '| :-: ').join('');
-    let markdownTable = `## ${monthStr}\n${tableHeader}|\n${tableDivider}|\n`;
+    let markdownTable = `### ${monthStr}\n${tableHeader}|\n${tableDivider}|\n`;
 
     cal.monthDates(year, month - 1).forEach((week: any) => {
       let row = '|';
